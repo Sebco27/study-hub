@@ -39,15 +39,14 @@ Script automatizado en Bash para evaluar algoritmos implementados por estudiante
 
 ### Ejecución:
 ```bash
-chmod +x testLab.sh
-./testLab.sh
+bash testLab.sh
 ```
 
 ## Requisitos del Sistema
 
 - **Sistema Operativo**:
   - Linux
-  - MacOS puede fallar por el uso de `timeout`
+  - MacOS (puede fallar por el uso de `timeout`)
 - **Dependencias**:
   - `bash` (shell)
   - `unzip` (descompresión)
@@ -77,7 +76,9 @@ Cada estudiante genera un archivo `.txt` con:
 [Nombre] [Apellido] [SegundoApellido]
 Resultados de pruebas:
 [ejercicio]:
-[caso_prueba]: [resultado]
+[caso_prueba_1]: [resultado]
+[tiempo_ejecución]
+[caso_prueba_2]: [resultado]
 [tiempo_ejecución]
 ...
 ----------

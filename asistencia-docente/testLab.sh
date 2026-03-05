@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # =====================================================================
-# Script de para evaluar laboratorios
+# Script para evaluar laboratorios
 # =====================================================================
 
 # Variables Globales
