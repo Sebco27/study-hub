@@ -13,7 +13,6 @@ def descargarProblemasUVa():
         pid = problema[0] # ID interno
         num = problema[1] # número UVa
         mapa[num] = pid
-    print(mapa)
     return mapa
 
 PROBLEMAS_UVA = descargarProblemasUVa()
