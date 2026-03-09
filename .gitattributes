@@ -1,0 +1,3 @@
+# Detectar automáticamente archivos de texto y forzar LF
+* text=auto eol=lf
+
