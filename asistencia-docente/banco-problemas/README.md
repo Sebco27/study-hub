@@ -16,7 +16,7 @@ Incluye problemas de:
 
 # Scripts de Python
 
-El [banco de problemas original](old-banco.pdf) fue recopilado por el profesor [Eddy Ramírez](https://www.linkedin.com/in/eddy-ramirez-86951130).
+El [banco de problemas original](old-banco.pdf) fue recopilado por el profesor [Eddy Ramírez](https://www.tec.ac.cr/eddy-miguel-ramirez-jimenez).
 Dada la necesidad de pasarlo a formato **LaTeX**, desarrollé los scripts `parser.py`, `genURL.py` y `genLaTeX.py` para automatizar el proceso.
 
 El flujo general es:
