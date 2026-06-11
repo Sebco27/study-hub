@@ -1,9 +1,11 @@
-from shapely.geometry import Polygon, polygon
-from map_tools import gen_random_point, gen_heatmap
+import json
+
+from shapely.geometry import Polygon
+from map_tools import coord_transformer, gen_heatmap
 
 def main():
     # Foto de fondo
-    background_path = "map.png"
+    background_path = "map1.png"
 
     # Límites del parque
     park = Polygon([
@@ -13,11 +15,31 @@ def main():
         (10.011961249140755, -84.22951242892367)   # C
     ])
 
-    # Lista de puntos a simular
-    points_registered = []
+    new_points = input("Ingrese nuevos registros o presione ENTER para continuar: ")
+    if new_points != "":
+        json_points = json.loads(new_points)
+        # Cargar datos previos
+        try:
+            with open("activity_tracked.json", "r", encoding="utf-8") as f:
+                datos = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            datos = []
+        # Añadir nuevos registros
+        datos.extend(json_points)
+        # Guardar
+        with open("activity_tracked.json", "w", encoding="utf-8") as f:
+            json.dump(datos, f)
 
-    for _ in range(5): # Simulación de puntos
-        points_registered = points_registered + [gen_random_point(park) for _ in range(15)]
+    with open("activity_tracked.json", "r", encoding="utf-8") as f:
+        datos = json.load(f)
+
+    points_registered = [
+        coord_transformer(
+            punto["longitud"],
+            punto["latitud"]
+        )
+        for punto in datos
+    ]
 
     gen_heatmap(background_path, points_registered)
 

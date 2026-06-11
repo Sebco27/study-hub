@@ -1,9 +1,7 @@
-import random
 import numpy as np
 
 from matplotlib import pyplot as plt
 from scipy.ndimage import gaussian_filter
-from shapely.geometry import Point
 from collections import Counter
 
 def coord_transformer(lat, lon):
@@ -23,15 +21,6 @@ def coord_transformer(lat, lon):
     round_y = 5 * round(aprox_y / 5)
 
     return round_x, round_y
-
-def gen_random_point(polygon):
-    minx, miny, maxx, maxy = polygon.bounds
-    while True:
-        lon = random.uniform(minx, maxx)
-        lat = random.uniform(miny, maxy)
-
-        if polygon.contains(Point(lon, lat)):
-            return coord_transformer(lon, lat)
 
 def gen_heatmap(background_path, points):
     # Ruta de la imagen de fondo
