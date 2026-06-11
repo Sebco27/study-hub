@@ -1,6 +1,5 @@
 import json
 
-from shapely.geometry import Polygon
 from map_tools import coord_transformer, gen_heatmap
 
 def main():
@@ -8,12 +7,12 @@ def main():
     background_path = "map1.png"
 
     # Límites del parque
-    park = Polygon([
+    park = [
         (10.012967606841693, -84.22967336145524),  # A
-        (10.013118164024641, -84.22752222994986),  # D
-        (10.012600458330756, -84.2274471281018),   # E
-        (10.011961249140755, -84.22951242892367)   # C
-    ])
+        (10.013118164024641, -84.22752222994986),  # B
+        (10.012600458330756, -84.2274471281018),   # C
+        (10.011961249140755, -84.22951242892367)   # D
+    ]
 
     new_points = input("Ingrese nuevos registros o presione ENTER para continuar: ")
     if new_points != "":

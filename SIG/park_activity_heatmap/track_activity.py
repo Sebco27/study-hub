@@ -2,18 +2,15 @@ import json
 import random
 import requests
 
-from shapely.geometry import Polygon
-from shapely.geometry import Point
-
 TELEGRAM_BOT_TOKEN = None
 CHAT_ID = None
 
-park = Polygon([
+park = [
     (10.012967606841693, -84.22967336145524),
     (10.013118164024641, -84.22752222994986),
     (10.012600458330756, -84.2274471281018),
     (10.011961249140755, -84.22951242892367)
-])
+]
 
 def load_keys():
     global TELEGRAM_BOT_TOKEN
@@ -25,12 +22,35 @@ def load_keys():
             elif line.startswith("CHAT_ID="):
                 CHAT_ID = line.strip().split("=", 1)[1]
 
+def point_in_polygon(x, y, polygon):
+    inside = False
+    n = len(polygon)
+
+    for i in range(n):
+        x1, y1 = polygon[i]
+        x2, y2 = polygon[(i + 1) % n]
+
+        if ((y1 > y) != (y2 > y)):
+            xinters = (x2 - x1) * (y - y1) / (y2 - y1) + x1
+            if x < xinters:
+                inside = not inside
+
+    return inside
+
+def polygon_bounds(polygon):
+    xs = [p[0] for p in polygon]
+    ys = [p[1] for p in polygon]
+
+    return min(xs), min(ys), max(xs), max(ys)
+
 def gen_random_point(polygon):
-    minx, miny, maxx, maxy = polygon.bounds
+    minx, miny, maxx, maxy = polygon_bounds(polygon)
+
     while True:
         lon = random.uniform(minx, maxx)
         lat = random.uniform(miny, maxy)
-        if polygon.contains(Point(lon, lat)):
+
+        if point_in_polygon(lon, lat, polygon):
             return lon, lat
 
 def gen_random_time():
