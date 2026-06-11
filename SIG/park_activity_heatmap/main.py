@@ -4,7 +4,7 @@ from map_tools import coord_transformer, gen_heatmap
 
 def main():
     # Foto de fondo
-    background_path = "map1.png"
+    background_path = "map2.png"
 
     # Límites del parque
     park = [
@@ -20,25 +20,25 @@ def main():
         # Cargar datos previos
         try:
             with open("activity_tracked.json", "r", encoding="utf-8") as f:
-                datos = json.load(f)
+                data = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
-            datos = []
+            data = []
         # Añadir nuevos registros
-        datos.extend(json_points)
+        data.append(json_points)
         # Guardar
         with open("activity_tracked.json", "w", encoding="utf-8") as f:
-            json.dump(datos, f)
+            json.dump(data, f)
 
     with open("activity_tracked.json", "r", encoding="utf-8") as f:
-        datos = json.load(f)
+        data = json.load(f)
 
-    points_registered = [
-        coord_transformer(
-            punto["longitud"],
-            punto["latitud"]
-        )
-        for punto in datos
-    ]
+    points_registered = []
+    for activity in data:
+        for point in activity["puntos"]:
+            points_registered += [coord_transformer(
+                point["longitud"],
+                point["latitud"]
+            )]
 
     gen_heatmap(background_path, points_registered)
 

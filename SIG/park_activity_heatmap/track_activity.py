@@ -5,12 +5,14 @@ import requests
 TELEGRAM_BOT_TOKEN = None
 CHAT_ID = None
 
-park = [
+PARK = [
     (10.012967606841693, -84.22967336145524),
     (10.013118164024641, -84.22752222994986),
     (10.012600458330756, -84.2274471281018),
     (10.011961249140755, -84.22951242892367)
 ]
+
+AGE_GROUPS = ["Infante", "Joven", "Adulto", "Adulto Mayor"]
 
 def load_keys():
     global TELEGRAM_BOT_TOKEN
@@ -79,7 +81,7 @@ def main():
     for _ in range(random.randint(5, 10)):
         current_time = add_minute(current_time)
 
-        lon, lat = gen_random_point(park)
+        lon, lat = gen_random_point(PARK)
 
         puntos.append({
             "latitud": lat,
@@ -88,13 +90,16 @@ def main():
         })
 
     # Mensaje para Telegram
-    message = json.dumps(puntos)
+    message = {"grupo etario" : AGE_GROUPS[random.randint(0, 3)],
+               "puntos": puntos
+               }
+    message_jason = json.dumps(message)
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     requests.post(
         url,
         data={
             "chat_id": CHAT_ID,
-            "text": message[:4000]  # Telegram limita el tamaño del mensaje
+            "text": message_jason[:4000]  # Telegram limita el tamaño del mensaje
         }
     )
 
